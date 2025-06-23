@@ -1,15 +1,18 @@
 package com.example.ez_drive.config;
+
+import java.security.Key;
+import java.util.Date;
+
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
+
 import com.example.ez_drive.dto.entities.User;
 import com.example.ez_drive.dto.repositories.UserRepository;
-import com.example.ez_drive.models.enums.UserRoles;
+
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Component;
-import java.security.Key;
-import java.util.Date;
 
 @Component
 public class JwtService {
@@ -24,7 +27,8 @@ public class JwtService {
 
     public String generateToken(String username) {
 
-        User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
 
         long EXPIRATION = 1000 * 60 * 60;
         return Jwts.builder()

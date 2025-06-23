@@ -1,0 +1,19 @@
+enum UserRoles {
+  ADMIN
+  USER
+  GUEST
+}
+
+type User {
+  id: ID!
+  username: String!
+  name: String!
+  password: String!
+  role: UserRoles!
+}
+
+type Query {
+  hello: String
+  users: [User]
+  userById(id: ID!): User
+}

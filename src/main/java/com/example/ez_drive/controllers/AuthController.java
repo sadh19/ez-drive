@@ -22,8 +22,8 @@ public class AuthController {
     private final JwtService jwtService;
     private final ResponseService responseService;
 
-
-    public AuthController(AuthenticationManager authenticationManager, JwtService jwtService, ResponseService responseService) {
+    public AuthController(AuthenticationManager authenticationManager, JwtService jwtService,
+            ResponseService responseService) {
         this.authenticationManager = authenticationManager;
         this.jwtService = jwtService;
         this.responseService = responseService;
@@ -33,8 +33,7 @@ public class AuthController {
     public ResponseEntity<Map<String, Object>> login(@RequestBody LoginRequest loginRequest) {
 
         Authentication auth = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
-        );
+                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
         String jwt = jwtService.generateToken(loginRequest.getUsername());
         return responseService.generateResponse("JWT success", jwt);
     }
